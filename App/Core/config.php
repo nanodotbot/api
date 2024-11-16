@@ -1,18 +1,22 @@
 <?php
 
+use App\Core\LoadEnv;
+
+LoadEnv::load(base_path('.env'));
+
 return [
     'database' => [
-        'host' => 'localhost',
+        'host' => $_ENV['DB_HOST'],
         'port' => '3306',
-        'dbname' => 'kursverwaltung',
+        'dbname' => $_ENV['DB_NAME'],
+        'user' => $_ENV['DB_USER'],
+        'password' => $_ENV['DB_PASSWORD'] ?? '',
         'charset' => 'utf8mb4',
     ],
-    // 'services' => [
-    //     'prerender' => [
-    //         'token' => '',
-    //         'secret' => ''
-    //     ]
-    // ]
+    'jwt' => [
+        'secret_key' => $_ENV['JWT_SECRET_KEY'],
+        'expiration' => $_ENV['JWT_EXPIRATION']
+    ],
 ];
 
 

@@ -84,3 +84,14 @@ CREATE TABLE tbl_kurse_lernende (
     FOREIGN KEY (fk_lernende) REFERENCES tbl_lernende(id_lernende) ON DELETE CASCADE,
     FOREIGN KEY (fk_kurs) REFERENCES tbl_kurse(id_kurs) ON DELETE CASCADE
 );
+
+CREATE TABLE users (
+    id INT AUTO_INCREMENT PRIMARY KEY, -- Auto-increment primary key
+    username VARCHAR(255) NOT NULL UNIQUE, -- Username, unique for each user
+    email VARCHAR(255) NOT NULL UNIQUE, -- Email, unique for each user
+    password VARCHAR(255) NOT NULL, -- Hashed password
+    role ENUM('admin', 'user', 'guest') DEFAULT 'user', -- User role with a default of 'user'
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, -- Creation timestamp
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP, -- Update timestamp
+    deleted_at TIMESTAMP NULL DEFAULT NULL -- Soft delete field, if needed
+);

@@ -2,8 +2,21 @@
 
 namespace App\Core;
 
-class Response {
-    const NOT_FOUND = 404;
+class Response
+{
+    const OK = 200;
+    const CREATED = 201;
+    const BAD_REQUEST = 400;
+    const UNAUTHORIZED = 401;
     const FORBIDDEN = 403;
+    const NOT_FOUND = 404;
+    const SERVER_ERROR = 500;
+
+    // Sets the HTTP response code and sends JSON response
+    public static function json($data, $status = self::OK)
+    {
+        header('Content-Type: application/json');
+        http_response_code($status);
+        echo json_encode($data);
+    }
 }
-// TODO: add

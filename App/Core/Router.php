@@ -33,7 +33,9 @@ class Router {
     }
 
     public function route($uri, $method){
+        // dd($this->routes);
         foreach ($this->routes as $route) {
+            // dd($uri);
             if (preg_match($route['uri'], $uri, $matches) && $route['method'] === strtoupper($method)) {
                 // Filter only named parameters from $matches
                 $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
@@ -42,18 +44,10 @@ class Router {
                 return require base_path($route['controller']);
             }
         }
-        $this->abort();
-    }
-
-    protected function abort($code = Response::NOT_FOUND, $message = 'Not Found'){
-        http_response_code($code);
-        echo json_encode([
+        // Send a JSON response if the route is not found
+        Response::json([
             'status' => 'error',
-            'error' => [
-                'code' => $code,
-                'message' => $message
-            ]
-        ]);
-        exit;
+            'message' => 'Not Found'
+        ], Response::NOT_FOUND);
     }
 }
